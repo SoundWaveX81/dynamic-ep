@@ -7,9 +7,7 @@ from dynamicapi.serializers.product_one_serializer import ProductOneSerializer
 
 def get_price(request: Request) -> Response:
 
-    data = json.dumps(request.query_params)
-    data = json.loads(data)
-    product_serializer = ProductOneSerializer(data=data)
+    product_serializer = ProductOneSerializer(data=request.query_params)
 
     if product_serializer.is_valid():
         return Response({'detail': 'ok'}, status.HTTP_200_OK)

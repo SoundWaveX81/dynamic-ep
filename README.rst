@@ -53,16 +53,7 @@ example of unknown product type (status: 404)
 
 
 .. code:: json
+    
     {
         "msg": "product_three no pricing calculation for this product type"
     }
-
-
-
-
-
-
-
-
-
-

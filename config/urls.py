@@ -19,5 +19,5 @@ from dynamicapi.views import DynamicApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dynamic-api/<str:productcode>/', DynamicApiView.as_view(), name='dynamic-api')
+    path('dynamic-api/<str:productcode>/', DynamicApiView.as_view(), name='dynamic-api'),
 ]

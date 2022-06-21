@@ -1,21 +1,23 @@
-import importlib
+from .services import *
 
-from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
 
 class DynamicApiView(APIView):
 
-    def get(self, request, productcode=None,*args, **kwargs):
-        function_string = f'dynamicapi.services.{productcode}.get_price'
-        mod_name, func_name = function_string.rsplit('.',1)
-        
-        try:
-            mod = importlib.import_module(mod_name)
-        except ModuleNotFoundError:
-            return Response({'msg': f'{productcode} no pricing calculation for this product type'}, status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            return Response({'msg': e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def __product_type_class_factory(self, class_name: str):
+        classes = {
+            'ProductOne': ProductOne,
+            'ProductTwo': ProductTwo
+        }
+        return classes[class_name]
 
-        return getattr(mod, func_name)(request)
+    def get(self, request, productcode=None, *args, **kwargs):
+        try:
+            new_obj= self.__product_type_class_factory(productcode)()
+        except KeyError as e:
+            return Response({'msg': 'math this product does not exist'}, HTTP_400_BAD_REQUEST)
+
+        return new_obj.get_price(request)

@@ -1,2 +1,2 @@
-from . import product_one
-from . import product_two
+from .product_one import ProductOne
+from .product_two import ProductTwo

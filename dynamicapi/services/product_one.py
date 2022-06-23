@@ -2,9 +2,9 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.request import Request
 from rest_framework.response import Response
 from dynamicapi.serializers.product_one_serializer import ProductOneSerializer
+from .product_base import ProductType
 
-
-class ProductOne:
+class ProductOne(ProductType):
 
     def get_price(self, request: Request) -> Response:
         product_serializer = ProductOneSerializer(data=request.query_params)
